@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		488CE4D4B53E226AE63FFBBC /* Pods_ShopHome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8127EEE0691990273A52B3C /* Pods_ShopHome.framework */; };
 		9F35309E223689A600DF92F4 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35309D223689A600DF92F4 /* TestModel.swift */; };
+		9F59E2972236A058000811A4 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F59E2962236A058000811A4 /* Products.swift */; };
 		9F5CFCA8223678B500F27E08 /* ShopProductsRootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5CFCA7223678B500F27E08 /* ShopProductsRootModel.swift */; };
 		9F5CFCAA2236791A00F27E08 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5CFCA92236791A00F27E08 /* ApiManager.swift */; };
 		9FF0D45E22361EC800EF8EF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0D45D22361EC800EF8EF4 /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		9B12C65EE778DEB7ED682418 /* Pods-ShopHome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopHome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShopHome/Pods-ShopHome.debug.xcconfig"; sourceTree = "<group>"; };
 		9F35309D223689A600DF92F4 /* TestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
+		9F59E2962236A058000811A4 /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		9F5CFCA7223678B500F27E08 /* ShopProductsRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopProductsRootModel.swift; sourceTree = "<group>"; };
 		9F5CFCA92236791A00F27E08 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		9FF0D45A22361EC800EF8EF4 /* ShopHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +65,7 @@
 				9F5CFCA7223678B500F27E08 /* ShopProductsRootModel.swift */,
 				9F5CFCA92236791A00F27E08 /* ApiManager.swift */,
 				9F35309D223689A600DF92F4 /* TestModel.swift */,
+				9F59E2962236A058000811A4 /* Products.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				9F5CFCA8223678B500F27E08 /* ShopProductsRootModel.swift in Sources */,
 				9FF0D45E22361EC800EF8EF4 /* AppDelegate.swift in Sources */,
 				9F5CFCAA2236791A00F27E08 /* ApiManager.swift in Sources */,
+				9F59E2972236A058000811A4 /* Products.swift in Sources */,
 				9F35309E223689A600DF92F4 /* TestModel.swift in Sources */,
 				9FF0D475223628F900EF8EF4 /* ShopProductCat.swift in Sources */,
 				9FF0D4722236252F00EF8EF4 /* Shop.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/*
+
 
 typealias ShopRootModel = [RootModelElement]
 
@@ -526,4 +526,4 @@ class JSONAny: Codable {
     }
 }
 
-*/
+
