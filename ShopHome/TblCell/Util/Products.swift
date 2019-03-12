@@ -25,7 +25,7 @@ struct ShopProductsRootModelElement: Codable {
     let catalogVisibility: CatalogVisibility
     let description, shortDescription, sku, price: String
     let regularPrice, salePrice: String
-    let dateOnSaleFrom, dateOnSaleFromGmt, dateOnSaleTo, dateOnSaleToGmt: JSONNullShop?
+  //  let dateOnSaleFromGmt, dateOnSaleTo, dateOnSaleToGmt: JSONNullShop?
     let priceHTML: String
     let onSale, purchasable: Bool
     let totalSales: Int
@@ -77,10 +77,9 @@ struct ShopProductsRootModelElement: Codable {
         case sku, price
         case regularPrice = "regular_price"
         case salePrice = "sale_price"
-        case dateOnSaleFrom = "date_on_sale_from"
-        case dateOnSaleFromGmt = "date_on_sale_from_gmt"
-        case dateOnSaleTo = "date_on_sale_to"
-        case dateOnSaleToGmt = "date_on_sale_to_gmt"
+       // case dateOnSaleFromGmt = "date_on_sale_from_gmt"
+      //  case dateOnSaleTo = "date_on_sale_to"
+       // case dateOnSaleToGmt = "date_on_sale_to_gmt"
         case priceHTML = "price_html"
         case onSale = "on_sale"
         case purchasable

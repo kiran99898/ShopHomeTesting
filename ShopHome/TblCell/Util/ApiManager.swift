@@ -11,7 +11,7 @@ import Alamofire
 import PromiseKit
 
 class ApiManager{
-let urlll =    "https://www.ozairamall.com/wp-json/dokan/v1/stores/80/products?page=1&per_page=10"
+let urlll =    "https://www.ozairamall.com/wp-json/dokan/v1/stores/80/products?page=2&per_page=10"
     
  
     static let api = ApiManager()
