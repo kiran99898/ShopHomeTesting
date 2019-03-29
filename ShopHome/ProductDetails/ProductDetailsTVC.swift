@@ -8,15 +8,23 @@
 
 import UIKit
 
-class ProductDetailsTVC: UITableViewController {
+class ProductDetailsTVC: UITableViewController, SendImageUrl{
+    func didTappedCell(imgUrl: String) {
+        getIm(ur: imgUrl)
+    }
     
+
     
     @IBOutlet weak var productHead: HeadView!
-    
+
     
     var productDatas = ProductResponse(){
         didSet{
             descript = productDatas[0].description
+            
+            
+            
+            
             
             if productDatas[0].attributes.count != 0 {
                 
@@ -24,6 +32,12 @@ class ProductDetailsTVC: UITableViewController {
                     productAttributes.append(productAttribute)
                     
                 }
+                
+                for imgs in productDatas[0].images{
+                    imges.append(imgs.src)
+                }
+                
+                
             } else {
                 print("no data in the array ")
             }
@@ -60,6 +74,8 @@ class ProductDetailsTVC: UITableViewController {
     var brands = [String]()
     var colors = [String]()
     var descript: String?
+    var imges = [String]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +89,9 @@ class ProductDetailsTVC: UITableViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         productHead.getDetail(img: productDatas[0].images[0].src, proTit: productDatas[0].name, proPric: productDatas[0].salePrice)
+        productHead.images = imges
+        productHead.del = self
+        
     }
     
     
@@ -162,6 +181,25 @@ class ProductDetailsTVC: UITableViewController {
             
         }
     }
+    
+    func getIm(ur: String) {
+        _ = ApiManager.api.fetchImage(imageUrl: ur)
+            .done({ (res) in
+                let imageInfo = GSImageInfo(image: res, imageMode: .aspectFill)
+                let transitationInfo = GSTransitionInfo(fromView: self.view)
+                let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitationInfo)
+                imageViewer.dismissCompletion = {
+                    print("dismissed")
+                }
+                self.present(imageViewer, animated: true, completion: nil)
+                
+
+            })
+        
+        
+        
+    }
+
     
     
     

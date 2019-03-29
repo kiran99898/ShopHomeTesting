@@ -6,9 +6,10 @@
 //  Copyright © 2019 kiran. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 import PromiseKit
+import AlamofireImage
 
 class ApiManager {
     let urlll =    "https://www.ozairamall.com/wp-json/dokan/v1/stores/80/products?page=2&per_page=10"
@@ -148,5 +149,31 @@ class ApiManager {
         
     }
     
+    
+
+    // MARK:- DOWNLOAD IMAGE
+    func fetchImage(imageUrl: String) -> Promise<UIImage> {
+        
+        return Promise {
+            resolver in
+            
+            
+            Alamofire.request(imageUrl).responseImage{
+                response in
+                
+                if let da = response.result.value {
+                    resolver.fulfill(da)
+                    
+                }
+                
+                // print("my actual response is :- ",response)
+            }
+            
+        }
+        
+        
+        
+    }
+
 }
 

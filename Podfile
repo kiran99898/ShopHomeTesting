@@ -8,5 +8,6 @@ target 'ShopHome' do
   # Pods for ShopHome
    pod 'Alamofire'
    pod "PromiseKit", "~> 6.8"
+   pod 'AlamofireImage', '~> 3.5'
 
 end
