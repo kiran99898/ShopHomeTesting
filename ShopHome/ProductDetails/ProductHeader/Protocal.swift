@@ -8,6 +8,18 @@
 
 import Foundation
 
-protocol SendImageUrl {
+protocol SendImageUrl: NSObjectProtocol {
     func didTappedCell(imgUrl: String)
+}
+
+
+
+protocol SendBool: class {
+    func didSeeMoreButtonTapped(isSeeMoreTapped: Int)
+    
+}
+
+
+protocol SendHeight: class {
+    var height: Int { get set }
 }

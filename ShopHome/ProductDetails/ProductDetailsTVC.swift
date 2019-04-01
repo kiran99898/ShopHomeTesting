@@ -8,23 +8,22 @@
 
 import UIKit
 
-class ProductDetailsTVC: UITableViewController, SendImageUrl{
+class ProductDetailsTVC: UITableViewController, SendImageUrl {
     func didTappedCell(imgUrl: String) {
         getIm(ur: imgUrl)
     }
     
-
+    
+    
+    
     
     @IBOutlet weak var productHead: HeadView!
-
+    
     
     var productDatas = ProductResponse(){
         didSet{
             descript = productDatas[0].description
-            
-            
-            
-            
+            shortDesc = productDatas[0].shortDescription
             
             if productDatas[0].attributes.count != 0 {
                 
@@ -47,19 +46,19 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
     var productAttributes = [Attribute]() {
         didSet{
             for prod in productAttributes {
-                if prod.name == "Size"{
+                if prod.name.rawValue == "Size"{
                     for size in prod.options {
                         sizes.append(size)
                     }
                 }
                 
-                if prod.name == "Brands"{
+                if prod.name.rawValue == "Brands"{
                     for brand in prod.options {
                         brands.append(brand)
                     }
                 }
                 
-                if prod.name == "Color" {
+                if prod.name.rawValue == "Color" {
                     for color in prod.options {
                         colors.append(color)
                     }
@@ -74,15 +73,16 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
     var brands = [String]()
     var colors = [String]()
     var descript: String?
+    var shortDesc: String?
     var imges = [String]()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 40.0
         tableView.rowHeight = UITableView.automaticDimension
-
-
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,7 +123,7 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
             } else if index == 2 && colors.count != 0 {
                 return 50
             } else if index == 3 && productDatas[0].description != ""{
-                return  200
+                return 200
                 
             } else if index == 4 {
                 return 150
@@ -169,8 +169,9 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
             
         } else if index == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DescTVC", for: indexPath) as! DescTVC
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             if descript != "" {
-                cell.htmlString = descript
+                cell.htmlString = shortDesc
             }
             
             return cell
@@ -181,6 +182,15 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
             
         }
     }
+    
+    override  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "Descriptions") as! Descriptions
+        vc.fullDescription = descript
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+    
     
     func getIm(ur: String) {
         _ = ApiManager.api.fetchImage(imageUrl: ur)
@@ -193,13 +203,13 @@ class ProductDetailsTVC: UITableViewController, SendImageUrl{
                 }
                 self.present(imageViewer, animated: true, completion: nil)
                 
-
+                
             })
         
         
         
     }
-
+    
     
     
     

@@ -11,34 +11,41 @@ import UIKit
 class DescTVC: UITableViewCell {
     
     @IBOutlet weak var txtView: UITextView!
-    let messageTextViewMaxHeight: CGFloat = 300
+    @IBOutlet weak var seeMoreLabel: UILabel!
+    
+    
+    
+    var messageTextViewMaxHeight = 150
+    
     var htmlString: String? {
         didSet{
-        txtView.attributedText = htmlString?.htmlAttributed(family: "Avenir", size: 10, color: UIColor.gray)
+            txtView.attributedText = htmlString?.htmlAttributed(family: "Avenir", size: 10, color: UIColor.gray)
+            txtView.delegate = self
+            
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        txtView.delegate = self
         
     }
-
-
+    
+    
+    
 }
 
 extension DescTVC: UITextViewDelegate{
     
     func textViewDidChange(_ textView: UITextView)
     {
-        if textView.contentSize.height >= self.messageTextViewMaxHeight
+        if Int(textView.contentSize.height) >= self.messageTextViewMaxHeight
         {
             txtView.isScrollEnabled = true
-        }
-        else
-        {
-            textView.frame.size.height = textView.contentSize.height
+            seeMoreLabel.isHidden = false
+        }else{
             txtView.isScrollEnabled = false
+            seeMoreLabel.isHidden = false
+            
         }
     }
     

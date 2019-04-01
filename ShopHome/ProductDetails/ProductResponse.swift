@@ -5,9 +5,7 @@
 //  Created by kiran on 3/27/19.
 //  Copyright © 2019 kiran. All rights reserved.
 //
-
 import Foundation
-
 
 typealias ProductResponse = [ProductResponseElement]
 
@@ -16,30 +14,29 @@ struct ProductResponseElement: Codable {
     let name, slug: String
     let permalink: String
     let dateCreated, dateCreatedGmt, dateModified, dateModifiedGmt: String
-    let type: ProductResTypeEnum
-    let status: ProductResStatus
+    let type: PRTypeEnum
+    let status: PRStatus
     let featured: Bool
-    let catalogVisibility: ProductResCatalogVisibility
-    let description: String
-    let shortDescription: ShortDescription
-    let sku, price, regularPrice, salePrice: String
-    let dateOnSaleFrom, dateOnSaleFromGmt, dateOnSaleTo, dateOnSaleToGmt: ProductResJSONNull?
+    let catalogVisibility: PRCatalogVisibility
+    let description, shortDescription, sku, price: String
+    let regularPrice, salePrice: String
+    let dateOnSaleFrom, dateOnSaleFromGmt, dateOnSaleTo, dateOnSaleToGmt: PRJSONNull?
     let priceHTML: String
     let onSale, purchasable: Bool
     let totalSales: Int
     let virtual, downloadable: Bool
-    let downloads: [ProductResJSONAny]
+    let downloads: [PRJSONAny]
     let downloadLimit, downloadExpiry: Int
     let externalURL, buttonText: String
-    let taxStatus: ProductResTaxStatus
+    let taxStatus: PRTaxStatus
     let taxClass: String
     let manageStock: Bool
-    let stockQuantity: ProductResJSONNull?
+    let stockQuantity: Int?
     let inStock: Bool
-    let backorders: ProductResBackorders
+    let backorders: PRBackorders
     let backordersAllowed, backordered, soldIndividually: Bool
     let weight: String
-    let dimensions: ProductResDimensions
+    let dimensions: PRDimensions
     let shippingRequired, shippingTaxable: Bool
     let shippingClass: String
     let shippingClassID: Int
@@ -47,18 +44,18 @@ struct ProductResponseElement: Codable {
     let averageRating: String
     let ratingCount: Int
     let relatedIDS: [Int]
-    let upsellIDS, crossSellIDS: [ProductResJSONAny]
+    let upsellIDS, crossSellIDS: [PRJSONAny]
     let parentID: Int
     let purchaseNote: String
-    let categories: [ProductResCategory]
-    let tags: [ProductResJSONAny]
-    let images: [ProductResImage]
+    let categories: [PRCategory]
+    let tags: [PRJSONAny]
+    let images: [PRImage]
     let attributes: [Attribute]
-    let defaultAttributes, variations, groupedProducts: [ProductResJSONAny]
+    let defaultAttributes, variations, groupedProducts: [PRJSONAny]
     let menuOrder: Int
-    let metaData: [ProductResMetaDatum]
-    let store: ProductResStore
-    let links: ProductResLinks
+    let metaData: [PRMetaDatum]
+    let store: PRStore
+    let links: PRLinks
     
     enum CodingKeys: String, CodingKey {
         case id, name, slug, permalink
@@ -121,48 +118,41 @@ struct ProductResponseElement: Codable {
 
 struct Attribute: Codable {
     let id: Int
-    let name: String
+    let name: AttributeName
     let position: Int
     let visible, variation: Bool
     let options: [String]
 }
 
-enum ProductResBackorders: String, Codable {
+enum AttributeName: String, Codable {
+    case brands = "Brands"
+    case color = "Color"
+    case size = "Size"
+}
+
+enum PRBackorders: String, Codable {
     case no = "no"
 }
 
-enum ProductResCatalogVisibility: String, Codable {
+enum PRCatalogVisibility: String, Codable {
     case visible = "visible"
 }
 
-struct ProductResCategory: Codable {
+struct PRCategory: Codable {
     let id: Int
-    let name: ProductResCategoryName
-    let slug: Slug
+    let name, slug: String
 }
 
-enum ProductResCategoryName: String, Codable {
-    case electronics = "Electronics"
-    case samsung = "Samsung"
-    case uncategorized = "Uncategorized"
-}
-
-enum Slug: String, Codable {
-    case electronics = "electronics"
-    case samsung = "samsung"
-    case uncategorized = "uncategorized"
-}
-
-struct ProductResDimensions: Codable {
+struct PRDimensions: Codable {
     let length, width, height: String
 }
 
-struct ProductResImage: Codable {
+struct PRImage: Codable {
     let id: Int
     let dateCreated, dateCreatedGmt, dateModified, dateModifiedGmt: String
     let src: String
     let name: String
-    let alt: ProductResAlt
+    let alt: PRAlt
     let position: Int
     
     enum CodingKeys: String, CodingKey {
@@ -175,13 +165,13 @@ struct ProductResImage: Codable {
     }
 }
 
-enum ProductResAlt: String, Codable {
+enum PRAlt: String, Codable {
     case empty = ""
     case placeholder = "Placeholder"
 }
 
-struct ProductResLinks: Codable {
-    let linksSelf, collection: [ProductResCollection]
+struct PRLinks: Codable {
+    let linksSelf, collection: [PRCollection]
     
     enum CodingKeys: String, CodingKey {
         case linksSelf = "self"
@@ -189,19 +179,19 @@ struct ProductResLinks: Codable {
     }
 }
 
-struct ProductResCollection: Codable {
+struct PRCollection: Codable {
     let href: String
 }
 
-struct ProductResMetaDatum: Codable {
+struct PRMetaDatum: Codable {
     let id: Int
     let key: String
-    let value: ProductResValueUnion
+    let value: PRValueUnion
 }
 
-enum ProductResValueUnion: Codable {
+enum PRValueUnion: Codable {
     case string(String)
-    case valueClass(ProductResValueClass)
+    case valueClass(PRValueClass)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -209,11 +199,11 @@ enum ProductResValueUnion: Codable {
             self = .string(x)
             return
         }
-        if let x = try? container.decode(ProductResValueClass.self) {
+        if let x = try? container.decode(PRValueClass.self) {
             self = .valueClass(x)
             return
         }
-        throw DecodingError.typeMismatch(ProductResValueUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ProductResValueUnion"))
+        throw DecodingError.typeMismatch(PRValueUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for PRValueUnion"))
     }
     
     func encode(to encoder: Encoder) throws {
@@ -227,29 +217,24 @@ enum ProductResValueUnion: Codable {
     }
 }
 
-struct ProductResValueClass: Codable {
-    let vcGridID: [ProductResJSONAny]
+struct PRValueClass: Codable {
+    let vcGridID: [PRJSONAny]
     
     enum CodingKeys: String, CodingKey {
         case vcGridID = "vc_grid_id"
     }
 }
 
-enum ShortDescription: String, Codable {
-    case empty = ""
-    case pStrongModelStrongKLV40R352CP = "<p><strong>Model :</strong> KLV-40R352C</p>\n"
-}
-
-enum ProductResStatus: String, Codable {
+enum PRStatus: String, Codable {
     case publish = "publish"
 }
 
-struct ProductResStore: Codable {
+struct PRStore: Codable {
     let id: Int
-    let name: ProductResStoreName
+    let name: PRStoreName
     let shopName: ShopName
     let url: String
-    let address: ProductResAddress
+    let address: PRAddress
     
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -258,13 +243,13 @@ struct ProductResStore: Codable {
     }
 }
 
-struct ProductResAddress: Codable {
-    let street1: ProductResStreet1
-    let street2: ProductResStreet2
-    let city: ProductResCity
-    let zip: ProductResZip
-    let country: ProductResCountry
-    let state: ProductResState
+struct PRAddress: Codable {
+    let street1: PRStreet1
+    let street2: PRStreet2
+    let city: PRCity
+    let zip: PRZip
+    let country: PRCountry
+    let state: PRState
     
     enum CodingKeys: String, CodingKey {
         case street1 = "street_1"
@@ -273,51 +258,55 @@ struct ProductResAddress: Codable {
     }
 }
 
-enum ProductResCity: String, Codable {
+enum PRCity: String, Codable {
+    case empty = ""
     case rajbiraj = "Rajbiraj"
 }
 
-enum ProductResCountry: String, Codable {
+enum PRCountry: String, Codable {
     case np = "NP"
 }
 
-enum ProductResState: String, Codable {
+enum PRState: String, Codable {
     case bag = "BAG"
 }
 
-enum ProductResStreet1: String, Codable {
+enum PRStreet1: String, Codable {
+    case empty = ""
     case rajbiraj3SaptariNepal = "Rajbiraj - 3, Saptari, Nepal"
 }
 
-enum ProductResStreet2: String, Codable {
+enum PRStreet2: String, Codable {
     case sherpaMall = "Sherpa Mall"
 }
 
-enum ProductResZip: String, Codable {
+enum PRZip: String, Codable {
     case firstFloor = "First Floor"
 }
 
-enum ProductResStoreName: String, Codable {
+enum PRStoreName: String, Codable {
+    case abShoeShop = "AB shoe shop"
     case admin = "admin"
 }
 
 enum ShopName: String, Codable {
+    case abShoeShop = "AB shoe shop"
     case navinKumarNavjyoti = "Navin Kumar Navjyoti"
 }
 
-enum ProductResTaxStatus: String, Codable {
+enum PRTaxStatus: String, Codable {
     case taxable = "taxable"
 }
 
-enum ProductResTypeEnum: String, Codable {
+enum PRTypeEnum: String, Codable {
     case simple = "simple"
 }
 
 // MARK: Encode/decode helpers
 
-class ProductResJSONNull: Codable, Hashable {
+class PRJSONNull: Codable, Hashable {
     
-    public static func == (lhs: ProductResJSONNull, rhs: ProductResJSONNull) -> Bool {
+    public static func == (lhs: PRJSONNull, rhs: PRJSONNull) -> Bool {
         return true
     }
     
@@ -330,7 +319,7 @@ class ProductResJSONNull: Codable, Hashable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if !container.decodeNil() {
-            throw DecodingError.typeMismatch(ProductResJSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ProductResJSONNull"))
+            throw DecodingError.typeMismatch(PRJSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for PRJSONNull"))
         }
     }
     
@@ -340,7 +329,7 @@ class ProductResJSONNull: Codable, Hashable {
     }
 }
 
-class ProductResJSONCodingKey: CodingKey {
+class PRJSONCodingKey: CodingKey {
     let key: String
     
     required init?(intValue: Int) {
@@ -360,16 +349,16 @@ class ProductResJSONCodingKey: CodingKey {
     }
 }
 
-class ProductResJSONAny: Codable {
+class PRJSONAny: Codable {
     let value: Any
     
     static func decodingError(forCodingPath codingPath: [CodingKey]) -> DecodingError {
-        let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Cannot decode ProductResJSONAny")
-        return DecodingError.typeMismatch(ProductResJSONAny.self, context)
+        let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Cannot decode PRJSONAny")
+        return DecodingError.typeMismatch(PRJSONAny.self, context)
     }
     
     static func encodingError(forValue value: Any, codingPath: [CodingKey]) -> EncodingError {
-        let context = EncodingError.Context(codingPath: codingPath, debugDescription: "Cannot encode ProductResJSONAny")
+        let context = EncodingError.Context(codingPath: codingPath, debugDescription: "Cannot encode PRJSONAny")
         return EncodingError.invalidValue(value, context)
     }
     
@@ -387,7 +376,7 @@ class ProductResJSONAny: Codable {
             return value
         }
         if container.decodeNil() {
-            return ProductResJSONNull()
+            return PRJSONNull()
         }
         throw decodingError(forCodingPath: container.codingPath)
     }
@@ -407,19 +396,19 @@ class ProductResJSONAny: Codable {
         }
         if let value = try? container.decodeNil() {
             if value {
-                return ProductResJSONNull()
+                return PRJSONNull()
             }
         }
         if var container = try? container.nestedUnkeyedContainer() {
             return try decodeArray(from: &container)
         }
-        if var container = try? container.nestedContainer(keyedBy: ProductResJSONCodingKey.self) {
+        if var container = try? container.nestedContainer(keyedBy: PRJSONCodingKey.self) {
             return try decodeDictionary(from: &container)
         }
         throw decodingError(forCodingPath: container.codingPath)
     }
     
-    static func decode(from container: inout KeyedDecodingContainer<ProductResJSONCodingKey>, forKey key: ProductResJSONCodingKey) throws -> Any {
+    static func decode(from container: inout KeyedDecodingContainer<PRJSONCodingKey>, forKey key: PRJSONCodingKey) throws -> Any {
         if let value = try? container.decode(Bool.self, forKey: key) {
             return value
         }
@@ -434,13 +423,13 @@ class ProductResJSONAny: Codable {
         }
         if let value = try? container.decodeNil(forKey: key) {
             if value {
-                return ProductResJSONNull()
+                return PRJSONNull()
             }
         }
         if var container = try? container.nestedUnkeyedContainer(forKey: key) {
             return try decodeArray(from: &container)
         }
-        if var container = try? container.nestedContainer(keyedBy: ProductResJSONCodingKey.self, forKey: key) {
+        if var container = try? container.nestedContainer(keyedBy: PRJSONCodingKey.self, forKey: key) {
             return try decodeDictionary(from: &container)
         }
         throw decodingError(forCodingPath: container.codingPath)
@@ -455,7 +444,7 @@ class ProductResJSONAny: Codable {
         return arr
     }
     
-    static func decodeDictionary(from container: inout KeyedDecodingContainer<ProductResJSONCodingKey>) throws -> [String: Any] {
+    static func decodeDictionary(from container: inout KeyedDecodingContainer<PRJSONCodingKey>) throws -> [String: Any] {
         var dict = [String: Any]()
         for key in container.allKeys {
             let value = try decode(from: &container, forKey: key)
@@ -474,13 +463,13 @@ class ProductResJSONAny: Codable {
                 try container.encode(value)
             } else if let value = value as? String {
                 try container.encode(value)
-            } else if value is ProductResJSONNull {
+            } else if value is PRJSONNull {
                 try container.encodeNil()
             } else if let value = value as? [Any] {
                 var container = container.nestedUnkeyedContainer()
                 try encode(to: &container, array: value)
             } else if let value = value as? [String: Any] {
-                var container = container.nestedContainer(keyedBy: ProductResJSONCodingKey.self)
+                var container = container.nestedContainer(keyedBy: PRJSONCodingKey.self)
                 try encode(to: &container, dictionary: value)
             } else {
                 throw encodingError(forValue: value, codingPath: container.codingPath)
@@ -488,9 +477,9 @@ class ProductResJSONAny: Codable {
         }
     }
     
-    static func encode(to container: inout KeyedEncodingContainer<ProductResJSONCodingKey>, dictionary: [String: Any]) throws {
+    static func encode(to container: inout KeyedEncodingContainer<PRJSONCodingKey>, dictionary: [String: Any]) throws {
         for (key, value) in dictionary {
-            let key = ProductResJSONCodingKey(stringValue: key)!
+            let key = PRJSONCodingKey(stringValue: key)!
             if let value = value as? Bool {
                 try container.encode(value, forKey: key)
             } else if let value = value as? Int64 {
@@ -499,13 +488,13 @@ class ProductResJSONAny: Codable {
                 try container.encode(value, forKey: key)
             } else if let value = value as? String {
                 try container.encode(value, forKey: key)
-            } else if value is ProductResJSONNull {
+            } else if value is PRJSONNull {
                 try container.encodeNil(forKey: key)
             } else if let value = value as? [Any] {
                 var container = container.nestedUnkeyedContainer(forKey: key)
                 try encode(to: &container, array: value)
             } else if let value = value as? [String: Any] {
-                var container = container.nestedContainer(keyedBy: ProductResJSONCodingKey.self, forKey: key)
+                var container = container.nestedContainer(keyedBy: PRJSONCodingKey.self, forKey: key)
                 try encode(to: &container, dictionary: value)
             } else {
                 throw encodingError(forValue: value, codingPath: container.codingPath)
@@ -522,7 +511,7 @@ class ProductResJSONAny: Codable {
             try container.encode(value)
         } else if let value = value as? String {
             try container.encode(value)
-        } else if value is ProductResJSONNull {
+        } else if value is PRJSONNull {
             try container.encodeNil()
         } else {
             throw encodingError(forValue: value, codingPath: container.codingPath)
@@ -531,25 +520,25 @@ class ProductResJSONAny: Codable {
     
     public required init(from decoder: Decoder) throws {
         if var arrayContainer = try? decoder.unkeyedContainer() {
-            self.value = try ProductResJSONAny.decodeArray(from: &arrayContainer)
-        } else if var container = try? decoder.container(keyedBy: ProductResJSONCodingKey.self) {
-            self.value = try ProductResJSONAny.decodeDictionary(from: &container)
+            self.value = try PRJSONAny.decodeArray(from: &arrayContainer)
+        } else if var container = try? decoder.container(keyedBy: PRJSONCodingKey.self) {
+            self.value = try PRJSONAny.decodeDictionary(from: &container)
         } else {
             let container = try decoder.singleValueContainer()
-            self.value = try ProductResJSONAny.decode(from: container)
+            self.value = try PRJSONAny.decode(from: container)
         }
     }
     
     public func encode(to encoder: Encoder) throws {
         if let arr = self.value as? [Any] {
             var container = encoder.unkeyedContainer()
-            try ProductResJSONAny.encode(to: &container, array: arr)
+            try PRJSONAny.encode(to: &container, array: arr)
         } else if let dict = self.value as? [String: Any] {
-            var container = encoder.container(keyedBy: ProductResJSONCodingKey.self)
-            try ProductResJSONAny.encode(to: &container, dictionary: dict)
+            var container = encoder.container(keyedBy: PRJSONCodingKey.self)
+            try PRJSONAny.encode(to: &container, dictionary: dict)
         } else {
             var container = encoder.singleValueContainer()
-            try ProductResJSONAny.encode(to: &container, value: self.value)
+            try PRJSONAny.encode(to: &container, value: self.value)
         }
     }
 }

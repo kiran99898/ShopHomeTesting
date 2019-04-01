@@ -30,6 +30,7 @@
 		9FE9AAA92244CF660097F1F4 /* OrdersCheckout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE9AAA82244CF660097F1F4 /* OrdersCheckout.swift */; };
 		9FE9AAAB2244D0D80097F1F4 /* PostPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE9AAAA2244D0D80097F1F4 /* PostPacket.swift */; };
 		9FE9AAAD2244E5780097F1F4 /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE9AAAC2244E5780097F1F4 /* CartModel.swift */; };
+		9FED1ED02250A5060014C0F0 /* Descriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FED1ECF2250A5060014C0F0 /* Descriptions.swift */; };
 		9FF0D45E22361EC800EF8EF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0D45D22361EC800EF8EF4 /* AppDelegate.swift */; };
 		9FF0D46322361EC800EF8EF4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0D46122361EC800EF8EF4 /* Main.storyboard */; };
 		9FF0D46522361ECA00EF8EF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0D46422361ECA00EF8EF4 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		9FE9AAA82244CF660097F1F4 /* OrdersCheckout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersCheckout.swift; sourceTree = "<group>"; };
 		9FE9AAAA2244D0D80097F1F4 /* PostPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPacket.swift; sourceTree = "<group>"; };
 		9FE9AAAC2244E5780097F1F4 /* CartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
+		9FED1ECF2250A5060014C0F0 /* Descriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptions.swift; sourceTree = "<group>"; };
 		9FF0D45A22361EC800EF8EF4 /* ShopHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FF0D45D22361EC800EF8EF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FF0D46222361EC800EF8EF4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		9FD45EDF224B7ADD00C73511 /* ProductDetails */ = {
 			isa = PBXGroup;
 			children = (
+				9FED1ECE2250A4D40014C0F0 /* Descriptions */,
 				9FE26335224E5D5B00B686C4 /* ProductHeader */,
 				9F438290224E2C4D0015364A /* Util */,
 				9F43828B224DEC940015364A /* TVCell */,
@@ -168,6 +171,14 @@
 				9F3C681D22467C6B006CEEE7 /* Para.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9FED1ECE2250A4D40014C0F0 /* Descriptions */ = {
+			isa = PBXGroup;
+			children = (
+				9FED1ECF2250A5060014C0F0 /* Descriptions.swift */,
+			);
+			path = Descriptions;
 			sourceTree = "<group>";
 		};
 		9FF0D45122361EC800EF8EF4 = {
@@ -349,6 +360,7 @@
 				9FE26337224E5DC500B686C4 /* HeadImagesCVCell.swift in Sources */,
 				9FD45EE9224B7EB700C73511 /* ProductDetailsTVC.swift in Sources */,
 				9FE9AAAD2244E5780097F1F4 /* CartModel.swift in Sources */,
+				9FED1ED02250A5060014C0F0 /* Descriptions.swift in Sources */,
 				9FE9AAA92244CF660097F1F4 /* OrdersCheckout.swift in Sources */,
 				9FE2633B224E7B8700B686C4 /* Protocal.swift in Sources */,
 				9F43828F224DECDD0015364A /* SizeCVCell.swift in Sources */,
@@ -510,7 +522,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ShopHome/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiranrana.ShopHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -525,7 +540,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ShopHome/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiranrana.ShopHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
